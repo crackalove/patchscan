@@ -47,7 +47,18 @@ The tool is powered by **radare2 (via r2pipe)**, instruction normalization, SHA-
 
 ### Linux / macOS
 
-Install full dependencies:
+Install full dependencies (Includes ssdeep for better fuzzy similarity) :
 
 ```bash
 pip install -r requirements_linux.txt
+```
+### **Windows**
+
+Install Windows-compatible dependencies:
+
+```bash
+pip install -r requirements_windows.txt
+```
+
+Windows version does not include ssdeep because it often fails to build.
+PatchScan will automatically use the Python fallback similarity engine.
