@@ -73,14 +73,14 @@ Basic binary diff:
 python patchscan.py old.bin new.bin --out report_dir
 ```
 
-### **Output Files**
+## **Output Files**
 
-Depending on enabled options, PatchScan produces:
+- Depending on enabled options, PatchScan produces:
 
-report.html — main patch analysis report
+- report.html — main patch analysis report
 
-report.json — structured diff export
+- report.json — structured diff export
 
-graphs/ *.dot — CFG graphs for modified functions
+- graphs/ *.dot — CFG graphs for modified functions
 
-graphs/ *.png — rendered graphs (if Graphviz is installed)
+- graphs/ *.png — rendered graphs (if Graphviz is installed)
