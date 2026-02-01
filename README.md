@@ -76,7 +76,11 @@ python patchscan.py old.bin new.bin --out report_dir
 ### **Output Files**
 
 Depending on enabled options, PatchScan produces:
+
 report.html — main patch analysis report
+
 report.json — structured diff export
+
 graphs/ *.dot — CFG graphs for modified functions
+
 graphs/ *.png — rendered graphs (if Graphviz is installed)
