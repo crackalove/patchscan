@@ -1,4 +1,4 @@
-# PatchScan
+# PatchScan (EN)
 
 **PatchScan** is a reverse engineering utility designed to detect and document code changes between two versions of the same binary executable.
 
@@ -106,3 +106,127 @@ python patchscan.py old.bin new.bin --out report_dir
 - --parallel — parallel extraction mode
 
 - --no-banner — disable startup banner
+
+---
+
+## **Disclaimer**
+
+This tool is intended strictly for legal reverse engineering, patch research, and binary change analysis.
+
+---
+
+# PatchScan (RU)
+
+**PatchScan** - это инструмент для реверс-инжиниринга, предназначенный для обнаружения и документирования изменений кода между двумя версиями одного и того же бинарного исполняемого файла.
+
+Он выполняет сравнение на уровне функций, генерирует unified assembly diff, строит CFG-графы и создаёт структурированные отчёты в форматах HTML/JSON для анализа патчей.
+
+Инструмент основан на **radare2 (через r2pipe)**, нормализации инструкций, SHA-256 хешировании и fuzzy similarity оценке (ssdeep или Python fallback).
+
+---
+
+## Основные возможности
+
+- Diff на уровне функций:
+  - совпавшие / изменённые / неизменённые / добавленные / удалённые
+- Unified ASM diff с нормализацией опкодов
+- Экспорт CFG-графов (DOT + опциональный PNG через Graphviz)
+- Эвристика определения fix-изменений (добавление cmp/test, новые ветвления, новые вызовы)
+- Форматы отчётов:
+  - HTML
+  - JSON
+  - Оба сразу
+- Similarity engine:
+  - `ssdeep` (предпочтительный вариант)
+  - Python fallback (`difflib.SequenceMatcher`)
+- Опциональное кэширование для ускорения повторного анализа
+- Опциональный параллельный режим извлечения функций
+
+---
+
+## Требования
+
+### Обязательно
+- Python 3.8+
+- **radare2**
+- Зависимости Python:
+  - `r2pipe`
+  - `jinja2`
+
+### Необязательно (рекомендуется)
+- `tqdm` — прогресс-бар
+- `ssdeep` — fuzzy hashing (только Linux/macOS)
+- Graphviz (`dot`) — для генерации PNG из DOT-графов
+
+---
+
+## Установка
+
+### Linux / macOS
+
+Установка полного набора зависимостей (включает ssdeep для лучшей similarity оценки):
+
+```bash
+pip install -r requirements_linux.txt
+```
+### **Windows**
+
+Установка зависимостей, совместимых с Windows:
+
+```bash
+pip install -r requirements_windows.txt
+```
+
+Windows-версия не включает ssdeep, поскольку он часто не собирается.
+PatchScan автоматически использует Python fallback similarity engine.
+---
+
+## Использование
+
+Базовый binary diff:
+
+```bash
+python patchscan.py old.bin new.bin --out report_dir
+```
+
+## **Выходные файлы**
+
+В зависимости от выбранных опций PatchScan создаёт:
+
+- report.html — основной отчёт анализа патча
+
+- report.json — структурированный экспорт diff
+
+- graphs/*.dot — CFG-графы изменённых функций
+
+- graphs/*.png — визуализированные графы (если установлен Graphviz)
+
+---
+
+## **CLI Аргументы**
+
+- --out DIR — директория вывода
+
+- --engine {auto,python,ssdeep} — similarity engine
+
+- --max-funcs N — ограничение числа анализируемых функций
+
+- --no-cache — отключить кэширование
+
+- --fast — облегчённый режим анализа radare2
+
+- --no-graphs — отключить генерацию CFG
+
+- --format {html,json,both} — формат отчёта
+
+- --parallel — параллельный режим извлечения
+
+- --no-banner — отключить стартовый баннер
+
+---
+
+## **Предупреждение**
+
+Этот инструмент предназначен исключительно для легального реверс-инжиниринга, анализа патчей и исследования изменений в бинарных файлах.
+
+---
