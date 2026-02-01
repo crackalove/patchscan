@@ -84,3 +84,25 @@ python patchscan.py old.bin new.bin --out report_dir
 - graphs/ *.dot — CFG graphs for modified functions
 
 - graphs/ *.png — rendered graphs (if Graphviz is installed)
+
+---
+
+## **CLI Options**
+
+- --out DIR — output directory
+
+- --engine {auto,python,ssdeep} — similarity engine
+
+- --max-funcs N — limit number of analyzed functions
+
+- --no-cache — disable caching
+
+- --fast — lightweight radare2 analysis mode
+
+- --no-graphs — disable CFG generation
+
+- --format {html,json,both} — output report format
+
+- --parallel — parallel extraction mode
+
+- --no-banner — disable startup banner
