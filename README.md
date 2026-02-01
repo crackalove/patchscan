@@ -62,3 +62,13 @@ pip install -r requirements_windows.txt
 
 Windows version does not include ssdeep because it often fails to build.
 PatchScan will automatically use the Python fallback similarity engine.
+
+---
+
+## Usage
+
+Basic binary diff:
+
+```bash
+python patchscan.py old.bin new.bin --out report_dir
+```
