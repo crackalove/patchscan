@@ -17,12 +17,12 @@ import r2pipe
 from jinja2 import Template
 
 try:
-    from tqdm import tqdm  # type: ignore
+    from tqdm import tqdm
 except Exception:
     tqdm = None
 
 try:
-    import ssdeep as _ssdeep  # type: ignore
+    import ssdeep as _ssdeep
 except Exception:
     _ssdeep = None
 
@@ -159,9 +159,9 @@ def r2_open_checked(path: str):
 def r2_analyze(r2, fast: bool = False):
     """Run analysis with optional fast mode."""
     if fast:
-        r2.cmd("aa; aac")  # lighter
+        r2.cmd("aa; aac")
     else:
-        r2.cmd("aaa")      # full
+        r2.cmd("aaa")
 
 
 def r2_list_functions(r2) -> List[dict]:
@@ -297,8 +297,6 @@ def extract_funcs_cached(
 
     return res
 
-
-# Worker for parallel extraction (must be top-level for Windows spawn)
 def _extract_worker(
     path: str,
     engine_mode: str,
@@ -325,7 +323,6 @@ def match_functions(
             matches[ak] = ak
             used_b.add(ak)
 
-    # SHA exact
     b_by_sha: Dict[str, List[str]] = {}
     for bk, bf in b.items():
         b_by_sha.setdefault(bf.sha_norm, []).append(bk)
@@ -339,7 +336,6 @@ def match_functions(
             matches[ak] = cand[0]
             used_b.add(cand[0])
 
-    # similarity
     a_left = [k for k in a if k not in matches]
     b_left = [k for k in b if k not in used_b]
 
@@ -396,7 +392,7 @@ def unified_asm_diff(a_func: FuncInfo, b_func: FuncInfo, context_lines: int = 3)
 def r2_cfg_blocks(r2, fcn_offset: int, fast: bool = False) -> List[dict]:
     r2.cmd(f"s {fcn_offset}")
     if fast:
-        r2.cmd("af")  # stabilize function analysis for CFG
+        r2.cmd("af")
     g = r2.cmdj("agfj") or []
     if not g:
         return []
@@ -851,4 +847,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
