@@ -115,6 +115,8 @@ This tool is intended strictly for legal reverse engineering, patch research, an
 
 ---
 
+
+
 # PatchScan (RU)
 
 **PatchScan** - это инструмент для реверс-инжиниринга, предназначенный для обнаружения и документирования изменений кода между двумя версиями одного и того же бинарного исполняемого файла.
@@ -179,6 +181,7 @@ pip install -r requirements_windows.txt
 
 Windows-версия не включает ssdeep, поскольку он часто не собирается.
 PatchScan автоматически использует Python fallback similarity engine.
+
 ---
 
 ## Использование
@@ -228,5 +231,3 @@ python patchscan.py old.bin new.bin --out report_dir
 ## **Предупреждение**
 
 Этот инструмент предназначен исключительно для легального реверс-инжиниринга, анализа патчей и исследования изменений в бинарных файлах.
-
----
