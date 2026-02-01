@@ -1,17 +1,4 @@
 #!/usr/bin/env python3
-"""
-PatchScan - Binary Patch Analysis Tool
-Cross-platform, deterministic, production-ready
-
-PatchScan compares two versions of a binary and produces:
-- function-level diff (changed/added/removed)
-- ASM-level unified diffs
-- CFG graphs (DOT + optional PNG) with changed blocks marked
-- fix-likelihood heuristics
-- HTML and/or JSON report
-- optional ssdeep engine (auto on Linux), python fallback on Windows
-- caching + tqdm progress + optional parallel extraction
-"""
 
 import argparse
 import difflib
@@ -864,3 +851,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
