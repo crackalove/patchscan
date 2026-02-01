@@ -1,11 +1,6 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20windows-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![radare2](https://img.shields.io/badge/powered%20by-radare2-black)
-
-![Repo Size](https://img.shields.io/github/repo-size/crackalove/patchscan)
-![Last Commit](https://img.shields.io/github/last-commit/crackalove/patchscan)
-![Stars](https://img.shields.io/github/stars/crackalove/patchscan?style=social)
 
 
 # PatchScan (EN)
