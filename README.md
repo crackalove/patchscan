@@ -91,6 +91,11 @@ python patchscan.py old.bin new.bin --json
 - `*_precision_curve.png` — precision curve
 - `*_ida_rename.py` — IDA rename script
 
+
+### Disclaimer
+
+This tool is intended exclusively for **legal reverse engineering**, patch analysis, and research of binary code changes.
+
 ---
 
 ## PatchScan (RU)
@@ -168,6 +173,17 @@ JSON-отчёт:
 python patchscan.py old.bin new.bin --json
 ```
 
-### Disclaimer
+### Выходные файлы
+
+- `*.html` — основной отчёт анализа
+- `*.json` — структурированный diff (опционально)
+- `*.csv` — таблица сопоставлений функций (опционально)
+- `*_diffs/` — файлы ASM-diff
+- `*_score_hist.png` — распределение значений score
+- `*_precision_curve.png` — кривая "точность"
+- `*_ida_rename.py` — IDAPython-скрипт для переименования функций
+
+
+### Дисклеймер
 
 Инструмент предназначен исключительно для **легального реверс-инжиниринга**, анализа патчей и исследования изменений бинарного кода.
