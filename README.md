@@ -4,186 +4,182 @@
 
 # PatchScan
 
----
-
 ## PatchScan (EN)
 
-**PatchScan** is a reverse engineering tool for **binary patch analysis and function-level diffing**.
+**PatchScan** is a standalone engine for **binary patch analysis and function-level diffing**.
 
-It compares two versions of the same binary executable, matches functions using heuristic similarity scoring, and highlights logic changes, structural differences, and control-flow modifications.
+It compares two versions of the same binary, matches functions based on semantic and structural similarity, and highlights **real logic changes** instead of raw noise.
 
-PatchScan generates **interactive HTML reports by default**, with optional JSON/CSV exports and diagnostic graphs.
+PatchScan is designed as a **headless analysis engine**, not an IDE plugin.  
+IDA Pro and Ghidra are supported as **optional frontends** via export scripts.
 
-The tool is powered by **radare2 (via r2pipe)**, instruction normalization, control-flow analysis, hashing, and fuzzy similarity scoring.
+### What PatchScan Does
 
-### Key Features
+- Matches functions between old and new binaries
+- Detects logic and control-flow changes
+- Highlights added, removed, and modified functions
+- Produces machine-readable and human-readable reports
+- Bridges Radare2 analysis with IDA Pro and Ghidra
 
-- Function-level comparison:
-  - matched
-  - changed
-  - added
-  - removed
-- Multi-stage similarity matching (seed → propagation → global)
+### Core Features
+
+- Function-level diff (matched / modified / added / removed)
+- Multi-stage matching (seed, propagation, global resolution)
 - Opcode-normalized assembly diff
 - Control Flow Graph (CFG) analysis
-- Heuristic detection of patch-like changes:
-  - new `cmp` / `test`
-  - new branches
-  - callgraph changes
-- Report formats:
-  - **HTML (default)**
-  - JSON (`--json`)
-  - CSV (`--csv`)
-- Similarity engines:
-  - `ssdeep` (if available)
-  - Python fallback (`difflib`)
-- PNG diagnostic plots (score distribution, precision)
-- IDAPython rename script export
+- Callgraph-aware similarity propagation
+- Heuristic detection of patch patterns
+- Similarity engines: ssdeep / Python fallback
+- Diagnostic PNG plots
+
+### IDE Integration
+
+PatchScan does **not depend on any IDE**, but can export results to:
+
+**IDA Pro**
+- Function renaming
+- Function comments
+- Color-coding by confidence score
+
+**Ghidra**
+- Python Script Manager integration
+- Function renaming
+- Function comments
+- Color-coding by confidence score
+
+Color semantics:
+- 🟢 High confidence
+- 🟡 Medium confidence
+- 🔴 Low confidence
+
+### Output Formats
+
+- HTML report
+- JSON
+- CSV
+- Assembly diffs
+- PNG diagnostics
+- IDA rename script
+- Ghidra apply script
 
 ### Requirements
 
-**Mandatory**
+Mandatory:
 - Python 3.8+
 - radare2
-- Python packages:
-  - `r2pipe`
-  - `jinja2`
+- r2pipe
+- jinja2
 
-**Optional**
-- `ssdeep` (Linux/macOS)
-- `matplotlib` (PNG plots)
-- `graphviz` (`dot`) for CFG rendering
-- `tqdm` for progress bars
-
-### Installation
-
-**Linux / macOS**
-```bash
-pip install -r requirements_linux.txt
-```
-
-**Windows**
-```bash
-pip install -r requirements_windows.txt
-```
-
-> On Windows, `ssdeep` is optional. PatchScan will automatically fall back to the Python similarity engine.
+Optional:
+- ssdeep
+- matplotlib
+- graphviz
+- tqdm
 
 ### Usage
 
-Default run (HTML report):
+Basic launch:
 ```bash
 python patchscan.py old.bin new.bin
 ```
 
-JSON output:
+Exporting results and IDE scripts:
 ```bash
-python patchscan.py old.bin new.bin --json
+python patchscan.py old.bin new.bin --json --ida-script --ghidra-script
 ```
-
-### Output Files
-
-- `*.html` — main analysis report
-- `*.json` — structured diff (optional)
-- `*.csv` — match table (optional)
-- `*_diffs/` — assembly diff files
-- `*_score_hist.png` — score distribution plot
-- `*_precision_curve.png` — precision curve
-- `*_ida_rename.py` — IDA rename script
-
-
-### Disclaimer
-
-This tool is intended exclusively for **legal reverse engineering**, patch analysis, and research of binary code changes.
 
 ---
 
+
 ## PatchScan (RU)
 
-**PatchScan** — это инструмент для реверс-инжиниринга и анализа патчей, предназначенный для сравнения **двух версий одного бинарного файла**.
+**PatchScan** — это самостоятельный движок для **анализа бинарных патчей и diff’а на уровне функций**.
 
-Он сопоставляет функции, выявляет изменения в логике, анализирует структуру и граф управления потоком, а также формирует удобные отчёты для анализа исправлений.
+Он сравнивает две версии одного бинарного файла, сопоставляет функции по семантическому и структурному сходству и выделяет **реальные изменения логики**, а не шум от дизассемблера.
 
-По умолчанию PatchScan генерирует **HTML-отчёт**, с возможностью экспорта в JSON и CSV.
+PatchScan изначально спроектирован как **headless-инструмент**, а не плагин под IDE.  
+IDA Pro и Ghidra поддерживаются как **опциональные фронтенды** через экспортируемые скрипты.
 
-Инструмент основан на **radare2 (через r2pipe)**, нормализации инструкций, CFG-анализе и эвристическом similarity-скоринге.
+### Что делает PatchScan
 
-### Возможности
+- Сопоставляет функции между старой и новой версией бинаря
+- Определяет изменения логики и управляющего потока
+- Показывает добавленные, удалённые и модифицированные функции
+- Генерирует машиночитаемые и человекочитаемые отчёты
+- Связывает анализ Radare2 с визуализацией в IDA Pro и Ghidra
+
+### Ключевые возможности
 
 - Diff на уровне функций:
   - совпавшие
   - изменённые
   - добавленные
   - удалённые
-- Многостадийное сопоставление (seed → propagation → global)
-- ASM diff с нормализацией опкодов
+- Многостадийное сопоставление:
+  - seed
+  - propagation
+  - global resolution
+- ASM-diff с нормализацией инструкций
 - Анализ графа управления потоком (CFG)
-- Эвристика patch-изменений:
-  - новые `cmp` / `test`
-  - новые ветвления
-  - изменения вызовов
-- Форматы отчётов:
-  - **HTML (по умолчанию)**
-  - JSON (`--json`)
-  - CSV (`--csv`)
+- Propagation с учётом графа вызовов
+- Эвристическое обнаружение патчей
 - Similarity engine:
-  - `ssdeep` (если доступен)
+  - `ssdeep`
   - Python fallback (`difflib`)
-- PNG-графики (распределение score, precision)
-- Экспорт IDAPython-скрипта для переименования функций
+- Диагностические PNG-графики
+
+### Интеграция с IDE
+
+PatchScan **не зависит от IDE**, но умеет экспортировать результаты в:
+
+**IDA Pro**
+- Переименование функций
+- Комментарии к функциям
+- Цветовая маркировка по уверенности сопоставления
+
+**Ghidra**
+- Python-скрипт для Script Manager
+- Переименование функций
+- Комментарии
+- Цветовая маркировка по уверенности
+
+Цветовая семантика:
+- 🟢 Высокая уверенность
+- 🟡 Средняя уверенность
+- 🔴 Низкая уверенность / подозрительное совпадение
+
+### Форматы вывода
+
+- HTML-отчёт
+- JSON
+- CSV
+- ASM-diff
+- PNG-графики
+- IDA rename-скрипт
+- Ghidra apply-скрипт
 
 ### Требования
 
-**Обязательно**
+Обязательные:
 - Python 3.8+
 - radare2
-- Python-библиотеки:
-  - `r2pipe`
-  - `jinja2`
+- r2pipe
+- jinja2
 
-**Опционально**
-- `ssdeep` (Linux/macOS)
-- `matplotlib` — PNG-графики
-- `graphviz` (`dot`) — визуализация CFG
-- `tqdm` — прогресс-бар
-
-### Установка
-
-**Linux / macOS**
-```bash
-pip install -r requirements_linux.txt
-```
-
-**Windows**
-```bash
-pip install -r requirements_windows.txt
-```
-
-> В Windows `ssdeep` не обязателен — PatchScan автоматически использует Python fallback.
+Опциональные:
+- ssdeep
+- matplotlib
+- graphviz
+- tqdm
 
 ### Использование
 
-HTML-отчёт по умолчанию:
+Базовый запуск:
 ```bash
 python patchscan.py old.bin new.bin
 ```
 
-JSON-отчёт:
+Экспорт результатов и IDE-скриптов:
 ```bash
-python patchscan.py old.bin new.bin --json
+python patchscan.py old.bin new.bin --json --ida-script --ghidra-script
 ```
-
-### Выходные файлы
-
-- `*.html` — основной отчёт анализа
-- `*.json` — структурированный diff (опционально)
-- `*.csv` — таблица сопоставлений функций (опционально)
-- `*_diffs/` — файлы ASM-diff
-- `*_score_hist.png` — распределение значений score
-- `*_precision_curve.png` — кривая "точность"
-- `*_ida_rename.py` — IDAPython-скрипт для переименования функций
-
-
-### Дисклеймер
-
-Инструмент предназначен исключительно для **легального реверс-инжиниринга**, анализа патчей и исследования изменений бинарного кода.
