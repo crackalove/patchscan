@@ -2,7 +2,6 @@
 ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20windows-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-# PatchScan
 
 ## PatchScan (EN)
 
